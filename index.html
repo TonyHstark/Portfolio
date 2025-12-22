@@ -1,0 +1,610 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Ahsan Mamud | Android Developer</title>
+
+<style>
+:root {
+  --bg: #0e1117;
+  --panel: #161b22;
+  --sidebar: #0b0e14;
+  --tab: #1f2430;
+  --accent: #4fc3f7;
+  --text: #c9d1d9;
+  --muted: #8b949e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.about-header {
+  display: flex;
+  align-items: flex-start; /* instead of center */
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.profile-pic {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #1f2430;
+  filter: grayscale(20%);
+}
+
+.status-line {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+  opacity: 0.9;
+}
+
+body {
+  background: linear-gradient(135deg, #4f46e5, #22c55e);
+  font-family: "Segoe UI", sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* WINDOW */
+.window {
+  width: 92%;
+  max-width: 1100px;
+  height: 85vh;
+  background: var(--bg);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+}
+
+/* TITLE BAR */
+.titlebar {
+  height: 38px;
+  background: #1b1f27;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+.dots span:nth-child(1){background:#ff5f56;}
+.dots span:nth-child(2){background:#ffbd2e;}
+.dots span:nth-child(3){background:#27c93f;}
+
+.title {
+  color: var(--muted);
+  margin-left: 12px;
+  font-size: 14px;
+}
+
+/* LAYOUT */
+.layout {
+  display: flex;
+  height: calc(100% - 38px);
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  background: var(--sidebar);
+  padding: 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.sidebar h4 {
+  margin-bottom: 10px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 6px 0;
+  cursor: pointer;
+}
+.sidebar li.active,
+.sidebar li:hover {
+  color: var(--accent);
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TABS */
+.tabs {
+  height: 36px;
+  background: var(--tab);
+  display: flex;
+  align-items: center;
+}
+
+.tab {
+  padding: 8px 16px;
+  background: #0e1117;
+  color: var(--text);
+  border-right: 1px solid #222;
+  font-size: 14px;
+}
+
+/* EDITOR */
+.editor {
+  flex: 1;
+  padding: 40px;
+  color: var(--text);
+  font-family: "Courier New", monospace;
+  overflow-y: auto;
+}
+
+.editor h1 {
+  font-size: 36px;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.editor h2 {
+  font-size: 18px;
+  color: var(--muted);
+  margin-bottom: 30px;
+}
+
+.section {
+  display: none;
+  margin-bottom: 40px;
+  animation: fadeIn 0.2s ease;
+}
+.section.active {
+  display: block;
+}
+.section-title {
+  color: #79c0ff;
+  margin-bottom: 12px;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+ul {
+  list-style: none;
+}
+
+li::before {
+  content: "› ";
+  color: var(--accent);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+a::before {
+  content: "↗ ";
+  opacity: 0.6;
+}
+
+/* PROJECT CARDS */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.project-card {
+  background: #0b0e14;
+  border: 1px solid #1f2430;
+  padding: 16px;
+  border-radius: 6px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(79,195,247,0.15);
+}
+
+.project-card h4 {
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.project-card p {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.project-card a {
+  font-size: 13px;
+}
+.project-card img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  border: 1px solid #1f2430;
+  background: #000;
+}
+
+.project-links a {
+  display: inline-block;
+  margin-right: 12px;
+  font-size: 13px;
+}
+.project-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.tech-stack {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.company-projects-title {
+  margin-top: 30px;   /* creates clear separation */
+}
+
+/* 📱 MOBILE */
+@media (max-width: 768px) {
+  body {
+    align-items: flex-start;
+  }
+
+  .window {
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .sidebar ul {
+    display: flex;
+    gap: 16px;
+  }
+
+  .main {
+    flex: 1;
+  }
+
+  .editor h1 {
+    font-size: 28px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="window">
+
+  <div class="titlebar">
+    <div class="dots">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="title">Ahsan — Visual Studio Code</div>
+  </div>
+
+  <div class="layout">
+
+    <div class="sidebar">
+      <h4>EXPLORER</h4>
+      <ul>
+         <li class="active" data-target="about">about.md</li>
+        <li data-target="skills">skills.json</li>
+        <li data-target="projects">projects.kt</li>
+        <li data-target="experience">experience.md</li>
+        <li data-target="contact">contact.txt</li>
+      </ul>
+    </div>
+
+    <div class="main">
+      <div class="tabs">
+       <div class="tab" id="tabName">about.md</div>
+      </div>
+
+      <div class="editor">
+      <section class="section active" id="about">
+      <div class="about-header">
+        <img src="profile.jpg" alt="Profile" class="profile-pic">
+        <div>
+          <h1>Ahsan Mamud</h1>
+          <h2>Android Developer • Kotlin • Jetpack Compose</h2>
+        <div class="status-line">
+        📍 Shipping production Android apps • Clean architecture focused
+        </div>
+      </div>
+    </div>
+
+  <div class="section-title"># whoami</div>
+  <p>
+    Android developer focused on building clean, modern apps using Kotlin,
+    Jetpack Compose, and Firebase. I enjoy turning ideas into smooth,
+    meaningful user experiences.
+  </p>
+
+</section>
+
+
+        <section class="section" id="skills">
+          <div class="section-title"># skills</div>
+          <ul>
+            <li>Kotlin / Java</li>
+            <li>Jetpack Compose</li>
+            <li>Android SDK</li>
+            <li>Firebase / Firestore</li>
+            <li>Clean Architecture</li>
+            <li>Git & GitHub</li>
+          </ul>
+       </section>
+
+<section class="section" id="projects">
+  <div class="section-title"># projects</div>
+
+  <div class="projects">
+    <!-- ANDROID PROJECT -->
+    <div class="project-card">
+      <img src="chat.jpg" alt="TalkToMe App Android">
+      <h4>TalkToMe App (Android)</h4>
+
+      <div class="tech-stack">
+        Tech: · Android Studio · Java · Kotlin · Jetpack Compose · Firebase · Coroutines
+      </div>
+      <div class="project-desc">
+        Real-time messaging application built using Jetpack Compose
+        with Firebase authentication and live message sync.
+        It's romantic-themed chat application designed to bring special Valentine's Day magic to conversations. 
+        The app combines standard messaging features with delightful Valentine's Day surprises that activate on February 14th.
+      </div>
+
+      <div class="project-links">
+        <a href="https://github.com/TonyHstark/Talk_to_Me.git" target="_blank">
+          GitHub ↗
+        </a>
+     
+      </div>
+    </div>
+
+    <!-- ANDROID PROJECT -->
+    <div class="project-card">
+      <img src="waste_not.png" alt="waste_not App">
+      <h4>Waste_Not App</h4>
+
+      <div class="tech-stack">
+        Tech: · Android Studio · Java · Firebase Realtime Database · Firebase Authentication
+      </div>
+
+      <div class="project-desc">
+        Android app designed to reduce food waste by connecting hotels,
+        hostels, and NGOs through real-time surplus food listings.
+      </div>
+     
+      <div class="project-links">
+    
+        <a href="https://mamudahsan130.medium.com/waste-not-460bbe435d3" target="_blank">
+          Case Study ↗
+        </a>
+      </div>
+    </div>
+
+        <!-- Web Dev PROJECT -->
+    <div class="project-card">
+      <img src="feedme.png" alt="FeedMe Web App">
+      <h4>FeedMe Web App</h4>
+      <div class="tech-stack">
+        Tech: React.js · VS Code · HTML/CSS · JavaScript
+      </div>
+      <div class="project-desc">
+        “FeedMe” is a food delivery web application that I built using React.js.
+        There are multiple pages including home page,cart,sign-in& sign up,etc. 
+        The main focus while designing the application is to make the web-app user friendly and to make it easy to use.
+      </div>
+
+    
+
+      <div class="project-links">
+
+      <a href="https://tonyhstark.github.io/feed_me/" target="_blank">
+          Live Site ↗
+        </a>
+        <a href="https://github.com/TonyHstark/feed_me.git" target="_blank">
+          GitHub ↗
+        <a href="https://mamudahsan130.medium.com/feedme-a-food-delivery-web-app-3f0eff31f7db" target="_blank">
+          Case Study ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- WEB PROJECT -->
+    <div class="project-card">
+      <img src="connect.png" alt="Connect Web App">
+      <h4>Connect (Web App)</h4>
+       <div class="tech-stack">
+        Tech: React.js · VS Code · Firebase 
+      </div>
+      <div class="project-desc">
+        Connect a social media web application enabling alumni to maintain connections, 
+        broadcast event announcements, and facilitate community engagement through intuitive 
+        comunication tools.Built with a React.js frontend and a Firebase backend (Firestore Auth & Database). 
+        Implemented user authentication and real-time announcement feeds.
+      </div>
+      
+      <div class="project-links">
+        <a href="https://tonyhstark.github.io/Connect_Synopsis/" target="_blank">
+          Live Site ↗
+        </a>
+        <a href="https://github.com/TonyHstark/Connect_Synopsis.git" target="_blank">
+          GitHub ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- WEB TOOL -->
+    <div class="project-card">
+      <img src="surprise.png" alt="Surprise Link Generator">
+      <h4>Surprise Link Generator</h4>
+      <div class="tech-stack">
+        Tech: HTML · CSS · Python · JavaScript· Google Colab
+      </div>
+      <div class="project-desc">
+        Tool for generating personalized, shareable HTML pages
+        used for special occasions like birthdays and anniversaries.
+      </div>
+      
+      <div class="project-links">
+        <a href="https://tonyhstark.github.io/SiglePageHtml/" target="_blank">
+          Live Site ↗
+        </a>
+        <a href="https://github.com/TonyHstark/SiglePageHtml.git" target="_blank">
+          GitHub ↗
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+<div class="section-title company-projects-title"># company_projects</div>
+<div class="project-card">
+  <h4>DL-One (Android)</h4>
+
+  <div class="tech-stack">
+      Tech: Android Studio · Kotlin/Java · REST APIs · Offline Data Handling
+  </div>
+  <div class="project-desc">
+  Production Android application used by field teams for daily operational workflows.
+  Contributed to feature development, bug fixes, performance improvements,
+  and chatbot-based user interactions.
+  </div>
+
+  <div class="project-links">
+    <a href="https://play.google.com/store/apps/details?id=com.company.dlone" target="_blank">
+      Play Store ↗
+    </a>
+  </div>
+</div>
+</section>
+
+  <section class="section" id="experience">
+  <div class="section-title"># experience</div>
+
+  <p><strong>Junior Android Developer — Dharma Life</strong> (Feb 2024 – Present)</p>
+  <ul>
+    <li>Engineered and maintained core features for 5 production apps (DL-One, DL-Society, LUYM,DL-Delivery,DL-Haat)</li>
+    <li>Reduced crash reports and improved Play Store ratings</li>
+    <li>Implemented MVVM using ViewModel, LiveData, and Room</li>
+    <li>Optimized UI with XML & ConstraintLayout for smoother performance</li>
+  </ul>
+
+  <br/>
+
+  <p><strong>Android Developer Intern — Dharma Life</strong> (Jul 2023 – Jan 2024)</p>
+  <ul>
+    <li>Revamped key UI screens using Kotlin & XML</li>
+    <li>Fixed bugs and shipped features in an Agile team</li>
+    <li>Strengthened understanding of Android SDK & Git workflows</li>
+  </ul>
+
+  <br/>
+
+  <p><strong>Frontend Developer Intern — JVT</strong> (Jun 2022 – Aug 2022)</p>
+  <ul>
+    <li>Built a responsive food delivery website using React.js</li>
+    <li>Improved UX with dynamic, mobile-friendly interfaces</li>
+  </ul>
+</section>
+
+
+         <section class="section" id="contact">
+          <div class="section-title"># contact</div>
+          <p>
+      
+            📧 Email: <a href="mailto:mamudahsan100@gmail.com">mamudahsan100@gmail.com</a>
+            &nbsp;|&nbsp;
+            <a href="https://mail.google.com/mail/?view=cm&to=mamudahsan100@gmail.com" target="_blank">
+            Open in Gmail ↗
+            </a><br>
+
+            💻 GitHub: <a href="https://github.com/TonyHstark" target="_blank">github.com/TonyHstark</a><br>
+            💼 LinkedIn: <a href="https://www.linkedin.com/in/ahsanmamud" target="_blank">https://www.linkedin.com/in/ahsanmamud</a><br>
+            ✍️ Medium: <a href="https://mamudahsan130.medium.com/" target="_blank">https://mamudahsan130.medium.com/</a><br>
+            <a href="resume.pdf" download>📄 Download Resume (PDF)</a>
+          </p>
+         </section>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const items = document.querySelectorAll(".sidebar li");
+const sections = document.querySelectorAll(".section");
+const tabName = document.getElementById("tabName");
+
+items.forEach(item => {
+  item.addEventListener("click", () => {
+    items.forEach(i => i.classList.remove("active"));
+    sections.forEach(s => s.classList.remove("active"));
+
+    item.classList.add("active");
+    document.getElementById(item.dataset.target).classList.add("active");
+    tabName.textContent = item.textContent;
+  });
+});
+</script>
+
+<script>
+document.addEventListener("keydown", (e) => {
+  const map = {
+    "1": "about",
+    "2": "skills",
+    "3": "projects",
+    "4": "experience",
+    "5": "contact"
+  };
+
+  if (map[e.key]) {
+    document.querySelector(`[data-target="${map[e.key]}"]`).click();
+  }
+});
+</script>
+
+
+</body>
+</html>
+
